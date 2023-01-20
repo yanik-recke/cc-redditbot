@@ -115,7 +115,7 @@ async def streamComments(reddit, subreddits):
                     
                     submission = comment.submission
                     await submission.load()
-                    #BIDA, KAH, NDA
+                    # change list if more keywords needed!
                     votes = [0, 0, 0]
                     
                     for com in submission.comments:
