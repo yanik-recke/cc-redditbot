@@ -142,7 +142,7 @@ async def streamComments(reddit, subreddits):
                         verdict = key1
                     
 
-                    msg = """Bezeichnung | Anzahl 
+                    msg = """Keyword | # 
 :--:|:--:
 """
                     msg += key0 + "|" + str(votes[0]) + "\n"
