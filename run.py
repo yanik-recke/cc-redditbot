@@ -26,7 +26,7 @@ the time to implement that.
 @author https://github.com/yanik-recke
 """
 
-load_dotenv('variables.env')  # get log-ins from .env-file
+load_dotenv('variablesforpost.env')  # get log-ins from .env-file
 client_id = os.getenv('REDDITID')
 client_secret = os.getenv('REDDITSECRET')
 username = os.getenv('REDDITUSERNAME')
@@ -73,8 +73,9 @@ async def streamSubmissions(reddit, subreddits):
                 
                 time = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
                 # post comment with formatting
-                await submission.reply("Current verdict: __To be determined__\n\nLast updated on " + time +
-                                       "\n\nPossible verdicts are: "+ key0 + ", " + key1 + ", " + key2 + "\n\nCheck back when there are more comments!") 
+                comment = await submission.reply("Current verdict: __To be determined__\n\nLast updated on " + time +
+                                       "\n\nPossible verdicts are: "+ key0 + ", " + key1 + ", " + key2 + "\n\nCheck back when there are more comments!")
+                await comment.mod.distinguish(sticky=True)
             
 
         # Error handling
@@ -115,7 +116,7 @@ async def streamComments(reddit, subreddits):
                     
                     submission = comment.submission
                     await submission.load()
-                    # change list if more keywords needed!
+                    #BIDA, KAH, NDA
                     votes = [0, 0, 0]
                     
                     for com in submission.comments:
@@ -141,9 +142,16 @@ async def streamComments(reddit, subreddits):
                         verdict = key1
                     
 
+                    msg = """Bezeichnung | Anzahl 
+:--:|:--:
+"""
+                    msg += key0 + "|" + str(votes[0]) + "\n"
+                    msg += key1 + "|" + str(votes[1]) + "\n"
+                    msg += key2 + "|" + str(votes[2]) + "\n\n"
                     
                     await bots_comment.edit("Current verdict: >!" + verdict + "!<\n\n" +
-                                            "Last updated on: " + datetime.now().strftime("%d/%m/%Y %H:%M:%S") + "\n\n" + key0 + ": " + str(votes[0]) + "\n\n" + key1 + ": " + str(votes[1]) + "\n\n" + key2 + ": " + str(votes[2]))
+                                            "Last updated on: " + datetime.now().strftime("%d/%m/%Y %H:%M:%S") + "\n\n" + msg +
+                                            "\n *** \n ^(Ich bin ein Bot.)")
 
         # Error handling
         except(Exception) as err0:
