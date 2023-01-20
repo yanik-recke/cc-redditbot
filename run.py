@@ -26,7 +26,7 @@ the time to implement that.
 @author https://github.com/yanik-recke
 """
 
-load_dotenv('variablesforpost.env')  # get log-ins from .env-file
+load_dotenv('variables.env')  # get log-ins from .env-file
 client_id = os.getenv('REDDITID')
 client_secret = os.getenv('REDDITSECRET')
 username = os.getenv('REDDITUSERNAME')
